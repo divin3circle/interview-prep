@@ -36,6 +36,27 @@ Explanation: Multiple elements appear more than once.
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`
 
+## Theoretical Concepts
+
+### Hash Tables
+A hash table is a data structure that provides average O(1) time complexity for insertion, deletion, and lookup operations. It works by:
+- Computing a hash code from the key (in this case, the array element)
+- Using the hash code to determine the index in an underlying array
+- Handling collisions through chaining or open addressing
+
+### Set Abstract Data Type (ADT)
+A Set is a collection that contains no duplicate elements. Key operations:
+- `add(element)`: Adds element if not already present, returns boolean indicating if added
+- `contains(element)`: Checks if element exists in the set
+- `remove(element)`: Removes element from the set
+
+Java's `HashSet` implements the Set interface using a hash table, providing O(1) average-case performance for basic operations.
+
+### Time-Space Tradeoff
+This problem demonstrates a classic tradeoff:
+- **Less space, more time**: Sorting approach uses O(1) extra space but O(n log n) time
+- **More space, less time**: HashSet approach uses O(n) space but O(n) time
+
 ## Approach
 
 ### Brute Force
@@ -71,12 +92,22 @@ See [solution-explained.md](solution-explained.md) for step-by-step walkthrough 
 
 See [test-cases.java](test-cases.java) for comprehensive test coverage.
 
+## Edge Cases
+
+- **Empty array**: Not possible per constraints (length >= 1)
+- **Single element**: `[1]` → `false` (need at least 2 elements for duplicate)
+- **All unique**: `[1,2,3,4,5]` → `false`
+- **All same**: `[5,5,5,5]` → `true` (duplicate found immediately)
+- **Duplicate at boundaries**: `[1,2,3,1]` → `true` (first and last elements)
+- **Large numbers**: Within range `-10^9` to `10^9`, hash function handles well
+- **Negative numbers**: `[-1,-2,-3,-1]` → `true` (works same as positive)
+
 ## Related Problems
 
-- Contains Duplicate II (with distance constraint)
-- Contains Duplicate III (with value constraint)
-- Find the Duplicate Number
-- Single Number
+- Contains Duplicate II (LeetCode 219) - with distance constraint
+- Contains Duplicate III (LeetCode 220) - with value constraint
+- Find the Duplicate Number (LeetCode 287)
+- Single Number (LeetCode 136)
 
 ## Key Insights
 

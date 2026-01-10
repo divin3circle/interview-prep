@@ -23,51 +23,14 @@ The Sliding Window pattern maintains a window of elements that satisfies certain
 ## Core Techniques
 
 ### Technique 1: Fixed-Size Window
-
-```java
-// Maximum sum of subarray of size k
-public int maxSumFixedWindow(int[] arr, int k) {
-    int windowSum = 0;
-    
-    // Initial window
-    for (int i = 0; i < k; i++) {
-        windowSum += arr[i];
-    }
-    
-    int maxSum = windowSum;
-    
-    // Slide window
-    for (int i = k; i < arr.length; i++) {
-        windowSum = windowSum - arr[i - k] + arr[i];
-        maxSum = Math.max(maxSum, windowSum);
-    }
-    
-    return maxSum;
-}
-```
+Used for problems with a constant window length `k`. Maintain a running total or state for the first `k` elements, then "slide" the window by adding the next element and removing the first element of the previous window in O(1) time.
 
 **Time**: O(n), **Space**: O(1)
 
 ### Technique 2: Dynamic Window (Expand/Contract)
+Used when the window size depends on a condition. The `right` pointer expands the window until a condition is met or violated, then the `left` pointer contracts the window until the invariant is restored.
 
-```java
-// Longest substring without repeating characters
-public int lengthOfLongestSubstring(String s) {
-    Set<Character> window = new HashSet<>();
-    int left = 0, maxLen = 0;
-    
-    for (int right = 0; right < s.length(); right++) {
-        // Contract window while duplicate exists
-        while (window.contains(s.charAt(right))) {
-            window.remove(s.charAt(left++));
-        }
-        window.add(s.charAt(right));
-        maxLen = Math.max(maxLen, right - left + 1);
-    }
-    
-    return maxLen;
-}
-```
+**Time**: O(n), **Space**: O(min(n, charset_size))
 
 **Time**: O(n), **Space**: O(min(n, charset_size))
 
@@ -123,32 +86,10 @@ Find minimum window containing all characters of target string.
 ## Common Mistakes
 
 ### Mistake 1: Not Contracting Window Properly
-
-```java
-// WRONG: Doesn't contract window when condition violated
-while (right < s.length()) {
-    window.add(s.charAt(right));
-    right++;
-}
-
-// CORRECT: Contract when needed
-for (int right = 0; right < s.length(); right++) {
-    while (violatesCondition()) {
-        window.remove(s.charAt(left++));
-    }
-    window.add(s.charAt(right));
-}
-```
+Ensure you use a `while` loop (not an `if`) to contract the window when a condition is violated, as moving the `left` pointer once might not be sufficient to restore the window's validity.
 
 ### Mistake 2: Wrong Window Size Calculation
-
-```java
-// WRONG: Off-by-one error
-int size = right - left;
-
-// CORRECT: Inclusive range
-int size = right - left + 1;
-```
+Always remember that for a window bounded by `left` and `right` (inclusive), the window size is `right - left + 1`.
 
 ## Interview Tips
 

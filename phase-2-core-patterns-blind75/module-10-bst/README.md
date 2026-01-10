@@ -7,25 +7,10 @@ Binary Search Trees (BST) have a specific property: for every node, all nodes in
 ## Core Techniques
 
 ### In-order Traversal
-In-order traversal of a BST yields elements in sorted order.
-```java
-void inorder(TreeNode root) {
-    if (root == null) return;
-    inorder(root.left);
-    print(root.val); // Process
-    inorder(root.right);
-}
-```
+In-order traversal (Left -> Root -> Right) of a BST yields elements in strictly increasing order. This property is used for validation and finding specific elements in sorted order.
 
 ### Validate BST
-Need to track valid ranges (min, max) for every node.
-```java
-boolean isValid(TreeNode node, long min, long max) {
-    if (node == null) return true;
-    if (node.val <= min || node.val >= max) return false;
-    return isValid(node.left, min, node.val) && isValid(node.right, node.val, max);
-}
-```
+To validate a BST, ensure that every node falls within a specific range `(min, max)`. The range is refined as you move down the tree: the current node's value becomes the `max` for the left subtree and the `min` for the right subtree.
 
 ## Problems
 1. Validate Binary Search Tree

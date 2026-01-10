@@ -6,21 +6,13 @@ Backtracking algorithm tracks the path to a solution; if a path leads to a dead 
 
 ## Core Techniques
 
-### Template
-```java
-void backtrack(List<Integer> path, int start) {
-    if (goalReached) {
-        result.add(new ArrayList<>(path));
-        return;
-    }
-    
-    for (int i = start; i < nums.length; i++) {
-        path.add(nums[i]); // Choose
-        backtrack(path, i + 1); // Explore
-        path.remove(path.size() - 1); // Un-choose (Backtrack)
-    }
-}
-```
+### General Template
+Backtracking usually follows a "Choose-Explore-Unchoose" pattern:
+1. **Base Case**: If the current path satisfies the goal, add it to the results.
+2. **Iteration**: Loop through all available candidates from a given position.
+3. **Choose**: Add the candidate to the current path.
+4. **Explore**: Recurse forward to find further candidates.
+5. **Backtrack**: Remove the candidate from the path to restore the state before trying the next candidate.
 
 ## Problems
 1. Subsets

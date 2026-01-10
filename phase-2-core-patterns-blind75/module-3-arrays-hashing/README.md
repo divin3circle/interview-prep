@@ -24,74 +24,22 @@ The Arrays & Hashing pattern leverages hash-based data structures (HashMap and H
 ## Core Techniques
 
 ### Technique 1: HashSet for Existence Checks
-
-```java
-// Check if array contains duplicates
-public boolean containsDuplicate(int[] nums) {
-    Set<Integer> seen = new HashSet<>();
-    for (int num : nums) {
-        if (seen.contains(num)) {
-            return true; // Found duplicate
-        }
-        seen.add(num);
-    }
-    return false;
-}
-```
+Use a `HashSet` to store elements as you iterate through the collection. For each element, check if it already exists in the set in O(1) time. This is the primary way to detect duplicates or previously seen values without nested loops.
 
 **Time**: O(n), **Space**: O(n)
 
 ### Technique 2: HashMap for Pair Finding
-
-```java
-// Find two numbers that sum to target
-public int[] twoSum(int[] nums, int target) {
-    Map<Integer, Integer> map = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        int complement = target - nums[i];
-        if (map.containsKey(complement)) {
-            return new int[]{map.get(complement), i};
-        }
-        map.put(nums[i], i);
-    }
-    return new int[]{};
-}
-```
+Use a `HashMap` to store each element and its index (or the element itself) as you traverse the array. For each element `x`, check if the required complement (e.g., `target - x`) exists in the map. This transforms a search problem into a lookup problem.
 
 **Time**: O(n), **Space**: O(n)
 
 ### Technique 3: Frequency Counting
-
-```java
-// Count frequency of each element
-public Map<Integer, Integer> countFrequency(int[] nums) {
-    Map<Integer, Integer> freq = new HashMap<>();
-    for (int num : nums) {
-        freq.put(num, freq.getOrDefault(num, 0) + 1);
-    }
-    return freq;
-}
-```
+Maintain a `HashMap<Element, Integer>` to store the count of each element. This is essential for problems involving anagrams, finding top-K frequent elements, or any problem requiring the "distribution" of values.
 
 **Time**: O(n), **Space**: O(n)
 
 ### Technique 4: Grouping with HashMap
-
-```java
-// Group anagrams together
-public List<List<String>> groupAnagrams(String[] strs) {
-    Map<String, List<String>> groups = new HashMap<>();
-    for (String s : strs) {
-        char[] chars = s.toCharArray();
-        Arrays.sort(chars);
-        String key = new String(chars);
-        
-        groups.putIfAbsent(key, new ArrayList<>());
-        groups.get(key).add(s);
-    }
-    return new ArrayList<>(groups.values());
-}
-```
+Use a `HashMap` where the value is a list (e.g., `Map<String, List<String>>`). Generate a "canonical form" (like a sorted string or a frequency key) and use it as the map key to group related items together.
 
 **Time**: O(n × k log k) where k = average string length, **Space**: O(n × k)
 
@@ -169,61 +117,13 @@ Calculate product of all elements except current.
 ## Common Mistakes
 
 ### Mistake 1: Using Nested Loops
-
-```java
-// WRONG: O(n²) time
-public boolean containsDuplicate(int[] nums) {
-    for (int i = 0; i < nums.length; i++) {
-        for (int j = i + 1; j < nums.length; j++) {
-            if (nums[i] == nums[j]) return true;
-        }
-    }
-    return false;
-}
-
-// CORRECT: O(n) time with HashSet
-public boolean containsDuplicate(int[] nums) {
-    Set<Integer> seen = new HashSet<>();
-    for (int num : nums) {
-        if (!seen.add(num)) return true;
-    }
-    return false;
-}
-```
+Avoid using O(n²) double loops to check for existence or pairs. Instead, use a `HashSet` or `HashMap` to achieve O(n) time.
 
 ### Mistake 2: Not Using getOrDefault
-
-```java
-// WRONG: Verbose and error-prone
-Map<Integer, Integer> freq = new HashMap<>();
-for (int num : nums) {
-    if (freq.containsKey(num)) {
-        freq.put(num, freq.get(num) + 1);
-    } else {
-        freq.put(num, 1);
-    }
-}
-
-// CORRECT: Concise and clear
-Map<Integer, Integer> freq = new HashMap<>();
-for (int num : nums) {
-    freq.put(num, freq.getOrDefault(num, 0) + 1);
-}
-```
+When counting frequencies in Java, use `map.getOrDefault(key, 0) + 1` to write cleaner, more efficient code and avoid verbose `null` checks.
 
 ### Mistake 3: Forgetting containsKey Check
-
-```java
-// WRONG: NullPointerException if key doesn't exist
-if (map.get(complement) != null) {
-    // This works but is less clear
-}
-
-// CORRECT: Explicit containsKey check
-if (map.containsKey(complement)) {
-    return new int[]{map.get(complement), i};
-}
-```
+Before retrieving a value that must exist, ensure you check `containsKey()` or handle potential `null` returns from `get()` to prevent `NullPointerException`.
 
 ## Interview Tips
 

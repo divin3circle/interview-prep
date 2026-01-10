@@ -37,6 +37,57 @@ Output: [0,0,9,0,0]
 - `-30 <= nums[i] <= 30`
 - Product of any prefix or suffix fits in 32-bit integer
 
+## Theoretical Concepts
+
+### Prefix and Suffix Products
+The key insight is that `answer[i]` = (product of all elements before i) × (product of all elements after i)
+
+**Prefix Product**: Product of all elements from index 0 to i-1
+- `prefix[0] = 1` (no elements before index 0)
+- `prefix[i] = prefix[i-1] × nums[i-1]`
+
+**Suffix Product**: Product of all elements from index i+1 to n-1
+- `suffix[n-1] = 1` (no elements after last index)
+- `suffix[i] = suffix[i+1] × nums[i+1]`
+
+**Final Answer**: `answer[i] = prefix[i] × suffix[i]`
+
+### Space Optimization
+Instead of maintaining separate prefix and suffix arrays:
+1. **First pass**: Store prefix products in output array
+2. **Second pass**: Multiply by suffix products on the fly using a running variable
+
+This reduces space from O(n) to O(1) (excluding output array).
+
+### Why Division Doesn't Work (with zeros)
+If division were allowed:
+- Calculate `totalProduct = product of all elements`
+- `answer[i] = totalProduct / nums[i]`
+
+**Problem with zeros**:
+- If one zero: Only that position has non-zero answer
+- If multiple zeros: All answers are zero
+- Division by zero is undefined
+
+The prefix/suffix approach handles zeros naturally without special cases.
+
+### Algorithm Evolution
+
+1. **Brute Force**: O(n²) - for each position, multiply all other elements
+2. **Division**: O(n) - but not allowed and fails with zeros
+3. **Prefix + Suffix Arrays**: O(n) time, O(n) space
+4. **Optimized**: O(n) time, O(1) space - use output array for prefix
+
+## Edge Cases
+
+- **Single zero**: `[1,2,0,4]` → `[0,0,8,0]` (only zero position is non-zero)
+- **Multiple zeros**: `[0,1,0,3]` → `[0,0,0,0]` (all products are zero)
+- **No zeros**: `[1,2,3,4]` → `[24,12,8,6]` (normal case)
+- **Negative numbers**: `[-1,1,0,-3,3]` → `[0,0,9,0,0]` (handles negatives)
+- **All ones**: `[1,1,1,1]` → `[1,1,1,1]`
+- **Two elements**: `[2,3]` → `[3,2]` (minimum case)
+- **Large products**: Guaranteed to fit in 32-bit integer per constraints
+
 ## Approach
 
 ### Division (Not Allowed)

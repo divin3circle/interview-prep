@@ -24,60 +24,17 @@ The Two Pointers pattern uses two pointers to traverse an array or string, typic
 ## Core Techniques
 
 ### Technique 1: Opposite Direction (Converging)
-
-```java
-// Find pair with target sum in sorted array
-public int[] twoSum(int[] nums, int target) {
-    int left = 0, right = nums.length - 1;
-    
-    while (left < right) {
-        int sum = nums[left] + nums[right];
-        if (sum == target) return new int[]{left, right};
-        else if (sum < target) left++;
-        else right--;
-    }
-    return new int[]{-1, -1};
-}
-```
+Used for sorted arrays or character sequences. One pointer starts at the beginning (`left = 0`) and the other at the end (`right = length - 1`). The pointers move toward each other based on a condition (e.g., sum comparison) until they meet.
 
 **Time**: O(n), **Space**: O(1)
 
 ### Technique 2: Same Direction (Fast and Slow)
-
-```java
-// Remove duplicates from sorted array
-public int removeDuplicates(int[] nums) {
-    int slow = 1; // Write position
-    
-    for (int fast = 1; fast < nums.length; fast++) {
-        if (nums[fast] != nums[fast - 1]) {
-            nums[slow++] = nums[fast];
-        }
-    }
-    return slow;
-}
-```
+Used for in-place modifications or finding cycles. Both pointers start at the same end; one processes elements (`fast`) while the other tracks the target position (`slow`).
 
 **Time**: O(n), **Space**: O(1)
 
 ### Technique 3: Sliding Window Variant
-
-```java
-// Find longest substring without repeating characters
-public int lengthOfLongestSubstring(String s) {
-    Set<Character> seen = new HashSet<>();
-    int left = 0, maxLen = 0;
-    
-    for (int right = 0; right < s.length(); right++) {
-        while (seen.contains(s.charAt(right))) {
-            seen.remove(s.charAt(left++));
-        }
-        seen.add(s.charAt(right));
-        maxLen = Math.max(maxLen, right - left + 1);
-    }
-    return maxLen;
-}
-```
+Two pointers that define a flexible range. The `right` pointer expands the window, and the `left` pointer shrinks it to maintain an invariant (e.g., no duplicates).
 
 **Time**: O(n), **Space**: O(min(n, charset_size))
 
@@ -144,45 +101,10 @@ Calculate how much rain water can be trapped.
 ## Common Mistakes
 
 ### Mistake 1: Not Handling Duplicates
-
-```java
-// WRONG: Doesn't skip duplicates in 3Sum
-while (left < right) {
-    if (sum == 0) {
-        result.add(Arrays.asList(nums[i], nums[left], nums[right]));
-        left++;
-        right--;
-    }
-}
-
-// CORRECT: Skip duplicates
-while (left < right) {
-    if (sum == 0) {
-        result.add(Arrays.asList(nums[i], nums[left], nums[right]));
-        while (left < right && nums[left] == nums[left + 1]) left++;
-        while (left < right && nums[right] == nums[right - 1]) right--;
-        left++;
-        right--;
-    }
-}
-```
+In problems like 3Sum, forgotten duplicate checks lead to repeated results. Ensure you use `while` loops to skip adjacent identical elements after processing a valid case.
 
 ### Mistake 2: Wrong Pointer Movement
-
-```java
-// WRONG: Always moving both pointers
-if (sum < target) {
-    left++;
-    right--;
-}
-
-// CORRECT: Move based on comparison
-if (sum < target) {
-    left++; // Need larger sum
-} else {
-    right--; // Need smaller sum
-}
-```
+Carefully consider which pointer to move based on the condition. For example, in Two Sum II, if the current sum is less than the target, only moving the `left` pointer forward will increase the sum.
 
 ## Interview Tips
 

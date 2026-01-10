@@ -7,16 +7,12 @@ Heaps (Priority Queues) allow O(1) access to the min or max element and O(log n)
 ## Core Techniques
 
 ### Max Heap
-Stores largest element at top.
-```java
-PriorityQueue<Integer> fast = new PriorityQueue<>((a, b) -> b - a);
-```
+A binary heap where the parent is always greater than or equal to its children. The largest element is always at the root.
+In Java: `new PriorityQueue<>(Collections.reverseOrder())`
 
 ### Min Heap
-Stores smallest element at top.
-```java
-PriorityQueue<Integer> pq = new PriorityQueue<>();
-```
+A binary heap where the parent is always less than or equal to its children. The smallest element is always at the root.
+In Java: `new PriorityQueue()` (Default)
 
 ## Problems
 1. Find Median from Data Stream

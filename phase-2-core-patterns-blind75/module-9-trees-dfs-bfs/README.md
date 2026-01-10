@@ -7,35 +7,15 @@ Tree problems usually involve traversing the tree to find properties or modify i
 ## Core Techniques
 
 ### Depth-First Search (DFS)
-Traverse deep into the tree before backtracking.
-- **Pre-order**: Root -> Left -> Right
-- **In-order**: Left -> Root -> Right (Sorted for BST)
-- **Post-order**: Left -> Right -> Root
-
-```java
-public int dfs(TreeNode root) {
-    if (root == null) return 0;
-    // Process root
-    int left = dfs(root.left);
-    int right = dfs(root.right);
-    return Math.max(left, right) + 1;
-}
-```
+Traverse deep into the tree before backtracking. This is typically implemented recursively using the call stack.
+- **Pre-order**: Root -> Left -> Right (Useful for cloning, prefix expressions)
+- **In-order**: Left -> Root -> Right (Yields sorted order in a BST)
+- **Post-order**: Left -> Right -> Root (Useful for bottom-up calculations like tree height)
 
 ### Breadth-First Search (BFS)
-Traverse level by level using a Queue.
-```java
-public void bfs(TreeNode root) {
-    Queue<TreeNode> queue = new LinkedList<>();
-    queue.offer(root);
-    while (!queue.isEmpty()) {
-        TreeNode node = queue.poll();
-        // Process node
-        if (node.left != null) queue.offer(node.left);
-        if (node.right != null) queue.offer(node.right);
-    }
-}
-```
+Traverse level by level using a **Queue** (FIFO). This is used for problems involving the width of a tree, shortest path in unweighted graphs, or level-order traversal.
+
+**Time**: O(n), **Space**: O(w) where w is max width.
 
 ## Problems
 1. Maximum Depth of Binary Tree

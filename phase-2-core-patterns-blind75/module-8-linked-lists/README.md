@@ -7,30 +7,10 @@ Linked Lists require pointer manipulation and often use techniques like two poin
 ## Core Techniques
 
 ### Reverse Linked List
-```java
-public ListNode reverse(ListNode head) {
-    ListNode prev = null, curr = head;
-    while (curr != null) {
-        ListNode next = curr.next;
-        curr.next = prev;
-        prev = curr;
-        curr = next;
-    }
-    return prev;
-}
-```
+Iteratively flip the `next` pointer of each node to point to the `previous` node. Requires maintaining a `prev` reference and a `temporary` reference to the next node before overwriting it.
 
 ### Fast/Slow Pointers
-```java
-public ListNode findMiddle(ListNode head) {
-    ListNode slow = head, fast = head;
-    while (fast != null && fast.next != null) {
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    return slow;
-}
-```
+Use two pointers that move at different speeds (usually 1 node vs 2 nodes per step). This is used for cycle detection (Floyd's Cycle-Finding Algorithm) or finding the middle/kth element of a list.
 
 ## Problems
 1. Reverse Linked List

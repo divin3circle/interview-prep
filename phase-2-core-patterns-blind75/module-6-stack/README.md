@@ -17,44 +17,10 @@ The Stack pattern uses Last-In-First-Out (LIFO) data structure to solve problems
 ## Core Techniques
 
 ### Technique 1: Matching Pairs
-
-```java
-public boolean isValid(String s) {
-    Stack<Character> stack = new Stack<>();
-    for (char c : s.toCharArray()) {
-        if (c == '(' || c == '[' || c == '{') {
-            stack.push(c);
-        } else {
-            if (stack.isEmpty()) return false;
-            char top = stack.pop();
-            if ((c == ')' && top != '(') ||
-                (c == ']' && top != '[') ||
-                (c == '}' && top != '{')) {
-                return false;
-            }
-        }
-    }
-    return stack.isEmpty();
-}
-```
+Push opening symbols onto the stack. When a closing symbol is encountered, pop the top element and verify it matches the current closer. If the stack is empty when needing to pop, or if the symbols don't match, the expression is invalid.
 
 ### Technique 2: Monotonic Stack
-
-```java
-public int[] nextGreaterElement(int[] nums) {
-    int[] result = new int[nums.length];
-    Stack<Integer> stack = new Stack<>();
-    
-    for (int i = nums.length - 1; i >= 0; i--) {
-        while (!stack.isEmpty() && stack.peek() <= nums[i]) {
-            stack.pop();
-        }
-        result[i] = stack.isEmpty() ? -1 : stack.peek();
-        stack.push(nums[i]);
-    }
-    return result;
-}
-```
+Used to find the next/previous greater/smaller element. Maintain a stack where elements are strictly increasing or decreasing. When a new element violates the order, pop from the stack until the property can be restored.
 
 ## Problems in This Module
 

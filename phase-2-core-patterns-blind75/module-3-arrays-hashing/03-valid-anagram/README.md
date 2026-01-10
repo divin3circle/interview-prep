@@ -38,6 +38,42 @@ Explanation: Same characters, different order
 - `1 <= s.length, t.length <= 5 * 10^4`
 - `s` and `t` consist of lowercase English letters
 
+## Theoretical Concepts
+
+### Anagram Definition
+Two strings are anagrams if:
+1. They have the same length
+2. They contain the same characters
+3. Each character appears with the same frequency
+
+### Frequency Counting
+Frequency counting is a fundamental technique for string/array problems:
+- Count occurrences of each element
+- Compare counts to determine equality
+- Can use HashMap (flexible) or Array (fixed character set)
+
+### Character Array Optimization
+For lowercase English letters (26 characters):
+- Use `int[26]` instead of `HashMap<Character, Integer>`
+- Map character to index: `char - 'a'` gives 0-25
+- **Space**: O(1) since array size is constant (26)
+- **Time**: Faster than HashMap due to no hashing overhead
+
+### Sorting vs Hashing Tradeoff
+Two main approaches:
+1. **Sorting**: O(n log n) time, O(n) space, simpler code
+2. **Hashing**: O(n) time, O(1) space (for fixed charset), optimal
+
+## Edge Cases
+
+- **Different lengths**: `s="abc", t="abcd"` → `false` (early termination)
+- **Empty strings**: Not possible per constraints (length >= 1)
+- **Single character**: `s="a", t="a"` → `true`
+- **All same character**: `s="aaaa", t="aaaa"` → `true`
+- **One character different**: `s="abc", t="abd"` → `false`
+- **Same characters, different frequencies**: `s="aab", t="abb"` → `false`
+- **Unicode characters**: Would require HashMap instead of array (follow-up)
+
 ## Approach
 
 ### Sorting

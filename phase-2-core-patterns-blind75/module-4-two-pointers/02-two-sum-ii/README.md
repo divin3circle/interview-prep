@@ -39,6 +39,55 @@ Output: [1,2]
 - `-1000 <= target <= 1000`
 - Exactly one solution exists
 
+## Theoretical Concepts
+
+### Sorted Array Properties
+When array is sorted, we gain powerful properties:
+- **Binary Search**: Can find element in O(log n)
+- **Two Pointers**: Can find pairs in O(n) with O(1) space
+- **Monotonicity**: If sum is too small, moving left pointer right increases sum
+- **Monotonicity**: If sum is too large, moving right pointer left decreases sum
+
+### Two Sum I vs Two Sum II
+
+| Aspect | Two Sum I | Two Sum II |
+|--------|-----------|------------|
+| Array | Unsorted | Sorted |
+| Optimal Approach | HashMap | Two Pointers |
+| Time | O(n) | O(n) |
+| Space | O(n) | O(1) |
+| Indexing | 0-indexed | 1-indexed |
+
+### Two Pointer Decision Logic
+```
+sum = numbers[left] + numbers[right]
+if (sum < target)  → left++   // Need larger sum
+if (sum > target)  → right--  // Need smaller sum
+if (sum == target) → return   // Found solution
+```
+
+**Why this works**:
+- If `sum < target`: All pairs with `right` and `left` or smaller are too small
+- If `sum > target`: All pairs with `left` and `right` or larger are too large
+- Each iteration eliminates one index from consideration
+
+### Space Complexity Constraint
+Problem requires O(1) space, which rules out:
+- HashMap approach (O(n) space)
+- Storing all pairs (O(n²) space)
+- Binary search for each element (O(1) space but O(n log n) time)
+
+Two pointers is the only approach meeting both time and space requirements.
+
+## Edge Cases
+
+- **Minimum length**: `[1,2], target=3` → `[1,2]`
+- **Negative numbers**: `[-1,0], target=-1` → `[1,2]`
+- **Duplicates**: `[1,2,2,3], target=4` → `[2,3]` or `[1,4]`
+- **Large gap**: `[1,100], target=101` → `[1,2]`
+- **Adjacent elements**: `[1,2,3], target=3` → `[1,2]`
+- **Same value repeated**: `[2,2,2], target=4` → `[1,2]` (first two)
+
 ## Approach
 
 ### Two Pointers (Optimal)

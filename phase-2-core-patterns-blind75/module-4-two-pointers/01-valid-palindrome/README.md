@@ -38,6 +38,46 @@ Explanation: Empty string after removing non-alphanumeric is palindrome
 - `1 <= s.length <= 2 * 10^5`
 - `s` consists only of printable ASCII characters
 
+## Theoretical Concepts
+
+### Two Pointer Pattern
+The two pointer technique uses two indices to traverse data structure:
+- **Opposite Direction**: Start from both ends, move toward center
+  - Used when: Checking symmetry, finding pairs in sorted array
+  - Example: Palindrome checking, Two Sum II
+- **Same Direction**: Both pointers move forward (fast/slow)
+  - Used when: Cycle detection, removing duplicates
+  - Example: Linked list cycle, remove duplicates
+
+### String Processing Techniques
+For this problem, we need to:
+1. **Filter characters**: Only consider alphanumeric
+2. **Normalize case**: Convert to lowercase for comparison
+3. **Compare symmetrically**: Check if string reads same forward/backward
+
+### In-Place vs String Building
+Two approaches to handle non-alphanumeric characters:
+1. **String Building**: Create filtered string, then check palindrome
+   - Time: O(n), Space: O(n)
+2. **In-Place (Optimal)**: Skip non-alphanumeric during comparison
+   - Time: O(n), Space: O(1)
+   - More efficient, no extra string allocation
+
+### Character Classification in Java
+- `Character.isLetterOrDigit(c)`: Returns true for a-z, A-Z, 0-9
+- `Character.toLowerCase(c)`: Converts to lowercase
+- Alternative: Manual check with `(c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')`
+
+## Edge Cases
+
+- **Empty after filtering**: `" "` or `".,,"` → `true` (empty string is palindrome)
+- **Single character**: `"a"` → `true`
+- **All non-alphanumeric**: `"!!!"` → `true` (becomes empty)
+- **Numbers only**: `"12321"` → `true`
+- **Mixed alphanumeric**: `"A1b2B1a"` → `true` (becomes "a1b2b1a")
+- **Case sensitivity**: `"Aa"` → `true` (both become 'a')
+- **Spaces in middle**: `"race a car"` → `false` (becomes "raceacar")
+
 ## Approach
 
 ### Two Pointers (Optimal)

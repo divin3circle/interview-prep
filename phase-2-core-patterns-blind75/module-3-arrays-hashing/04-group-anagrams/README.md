@@ -40,6 +40,47 @@ Output: [["a"]]
 - `0 <= strs[i].length <= 100`
 - `strs[i]` consists of lowercase English letters
 
+## Theoretical Concepts
+
+### Canonical Forms
+A canonical form is a unique representation for equivalent objects:
+- For anagrams, the canonical form could be:
+  - **Sorted string**: "eat" → "aet", "tea" → "aet", "ate" → "aet"
+  - **Character frequency**: "eat" → "#1#0#0#0#1#0...#1" (counts for a-z)
+- All anagrams map to the same canonical form
+- Use canonical form as HashMap key to group anagrams
+
+### HashMap of Lists Pattern
+Common pattern for grouping related items:
+```
+Map<Key, List<Value>> groups = new HashMap<>();
+for (item : items) {
+    key = computeKey(item);
+    groups.putIfAbsent(key, new ArrayList<>());
+    groups.get(key).add(item);
+}
+```
+- **Key**: Canonical form (sorted string or frequency)
+- **Value**: List of strings that share that canonical form
+
+### Complexity Analysis Comparison
+
+| Approach | Time per String | Total Time | Space |
+|----------|----------------|------------|-------|
+| Sorting | O(k log k) | O(n × k log k) | O(n × k) |
+| Counting | O(k) | O(n × k) | O(n × k) |
+
+Where n = number of strings, k = maximum string length
+
+## Edge Cases
+
+- **Empty string**: `[""]` → `[[""]]` (empty string groups with itself)
+- **Single string**: `["a"]` → `[["a"]]`
+- **No anagrams**: `["a","b","c"]` → `[["a"],["b"],["c"]]` (each in own group)
+- **All anagrams**: `["abc","bca","cab"]` → `[["abc","bca","cab"]]`
+- **Different lengths**: `["ab","abc"]` → `[["ab"],["abc"]]` (different lengths can't be anagrams)
+- **Duplicate strings**: `["a","a"]` → `[["a","a"]]` (duplicates are anagrams of each other)
+
 ## Approach
 
 ### Sorting as Key

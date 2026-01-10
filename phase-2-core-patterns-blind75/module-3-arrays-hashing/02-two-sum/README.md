@@ -42,6 +42,39 @@ Explanation: nums[0] + nums[1] = 3 + 3 = 6
 - `-10^9 <= target <= 10^9`
 - Only one valid answer exists
 
+## Theoretical Concepts
+
+### Hash Maps (Dictionaries)
+A HashMap stores key-value pairs and provides:
+- **O(1) average insertion**: `put(key, value)`
+- **O(1) average lookup**: `get(key)` or `containsKey(key)`
+- **O(1) average deletion**: `remove(key)`
+
+In Java, `HashMap<K, V>` implements the Map interface using a hash table with separate chaining for collision resolution.
+
+### The Complement Pattern
+For sum-based problems, the complement pattern is crucial:
+- Given a target sum and current value `x`
+- The complement is `target - x`
+- If complement exists in our data structure, we've found a pair
+
+This transforms the problem from "find two numbers that sum to target" to "for each number, check if its complement exists."
+
+### One-Pass vs Two-Pass
+- **Two-pass**: Build complete HashMap, then search for complements
+- **One-pass (optimal)**: Check for complement before adding current element
+  - Avoids using same element twice
+  - Reduces iterations from 2n to n
+
+## Edge Cases
+
+- **Duplicate values**: `[3,3], target=6` → Valid, returns `[0,1]`
+- **Negative numbers**: `[-1,-2,-3,-4], target=-6` → Works normally
+- **Zero in array**: `[0,4,3,0], target=0` → Returns indices of two zeros
+- **Large numbers**: Within constraint range, no overflow issues
+- **Minimum length**: Array has at least 2 elements per constraints
+- **Target equals element**: `[5,10], target=5` → No match (can't use same index twice)
+
 ## Approach
 
 ### Brute Force

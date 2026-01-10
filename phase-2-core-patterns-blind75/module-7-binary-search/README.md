@@ -10,21 +10,10 @@ Binary Search divides the search space in half repeatedly, achieving O(log n) ti
 2. **"Find minimum/maximum that satisfies..."** → Binary search on answer
 3. **Rotated sorted array** → Modified binary search
 
-## Core Technique
+### Standard Search
+Initialize `left` and `right` pointers. Calculate the `mid` point in a way that avoids overflow (`left + (right - left) / 2`). Compare the `mid` value with the target and adjust the range by shifting `left` or `right` to the half that must contain the target.
 
-```java
-public int binarySearch(int[] nums, int target) {
-    int left = 0, right = nums.length - 1;
-    
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (nums[mid] == target) return mid;
-        else if (nums[mid] < target) left = mid + 1;
-        else right = mid - 1;
-    }
-    return -1;
-}
-```
+**Time**: O(log n), **Space**: O(1)
 
 ## Problems
 

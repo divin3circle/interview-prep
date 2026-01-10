@@ -41,6 +41,50 @@ Output: [[0,0,0]]
 - `3 <= nums.length <= 3000`
 - `-10^5 <= nums[i] <= 10^5`
 
+## Theoretical Concepts
+
+### Reduction to Two Sum
+The key insight is reducing 3Sum to a Two Sum problem:
+1. **Fix one element** at index `i`
+2. **Find two elements** in remaining array that sum to `-nums[i]`
+3. Use two pointers on sorted array for the two-element search
+
+This transforms O(n³) brute force into O(n²) solution.
+
+### Duplicate Handling
+Critical for avoiding duplicate triplets:
+```
+// Skip duplicate first elements
+if (i > 0 && nums[i] == nums[i-1]) continue;
+
+// Skip duplicate second elements
+while (left < right && nums[left] == nums[left+1]) left++;
+
+// Skip duplicate third elements
+while (left < right && nums[right] == nums[right-1]) right--;
+```
+
+### Why Sorting Enables Optimization
+Sorting provides:
+1. **Two pointer technique**: Can find pairs in O(n)
+2. **Duplicate skipping**: Adjacent duplicates are easy to detect
+3. **Early termination**: If `nums[i] > 0`, no more solutions possible
+
+### Complexity Analysis
+- **Sorting**: O(n log n)
+- **Outer loop**: O(n) iterations
+- **Inner two pointers**: O(n) per iteration
+- **Total**: O(n²) dominates O(n log n)
+
+## Edge Cases
+
+- **All zeros**: `[0,0,0]` → `[[0,0,0]]`
+- **No solution**: `[1,2,3]` → `[]` (all positive, can't sum to 0)
+- **Duplicates in result**: `[-1,-1,2]` → `[[-1,-1,2]]` (one triplet)
+- **Multiple solutions**: `[-2,0,0,2,2]` → `[[-2,0,2]]`
+- **Minimum length**: `[0,0,0]` → `[[0,0,0]]` (exactly 3 elements)
+- **Large array with duplicates**: Skipping duplicates is crucial for performance
+
 ## Approach
 
 ### Sort + Two Pointers (Optimal)

@@ -6,17 +6,11 @@ Graphs model relationships. Common algorithms: DFS, BFS, Topological Sort, Union
 
 ## Core Techniques
 
-### DFS on Graph (Matrix)
-```java
-void dfs(int[][] grid, int r, int c) {
-    if (r < 0 || r >= grid.length || c < 0 || c >= grid[0].length || grid[r][c] == '0') return;
-    grid[r][c] = '0'; // visited
-    dfs(grid, r+1, c);
-    dfs(grid, r-1, c);
-    dfs(grid, r, c+1);
-    dfs(grid, r, c-1);
-}
-```
+### DFS on Grid / Matrix
+Standard Depth-First Search used to explore connected components (like islands) or paths.
+1. **Base Case**: Check for out-of-bounds or already visited cells.
+2. **Mark Visited**: Mark the current cell to prevent infinite loops.
+3. **Recurse**: Explore neighbors (usually 4 directions: Up, Down, Left, Right).
 
 ## Problems
 1. Number of Islands
